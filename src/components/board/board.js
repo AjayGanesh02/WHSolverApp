@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function Board() {
+export default function Board({ input }) {
   return (
-    <div>Board</div>
+    <div className="board">
+    </div>
   )
 }

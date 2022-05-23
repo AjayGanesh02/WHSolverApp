@@ -1,38 +1,54 @@
 import { useState } from 'react';
-import Board from './components/board/board';
 import Results from './components/results/results';
+
+import './app.scss';
 
 function App() {
 
+  const APIURL = 'https://api.whsolver.ajayganesh.com/solve?board='
+
   const [input, setInput] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [results, setResults] = useState([]);
 
   const handleInput = (e) => {
-    console.log(e.target.value);
     setInput(e.target.value);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    //prevent default form submission
     e.preventDefault();
-    console.log(input);
+
+    //clear previous results
+    setResults([]);
     setInput("");
+    setSubmitted(true);
+
+    //get results from API and assign
+    const response = await fetch(`${APIURL}${input}`);
+    const jsonresponse = await response.json();
+    setResults(jsonresponse.data);
   }
 
   return (
     <div className="App">
       <header>
         <h1>Word Hunt Solver</h1>
-        <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br/> It can be used for games in the style of the iMessage game Word Hunt.</p>
+        <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br /> It can be used for games in the style of the iMessage game Word Hunt.</p>
       </header>
       <main>
-      <form>
-        <label>
-          Enter your board as a string of unseperated letters:<br/>
-          <input type="text" value={input} onChange={handleInput} />
-        </label>
-        <input type="submit" onChange={handleSubmit} />
-      </form>
-      <Board/>
-      <Results/>
+        <div className='form'>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Enter your board as a string of 16 unseperated letters:<br />
+              <input type="text" value={input} onChange={handleInput} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+
+
+        <Results results={results} submitted={submitted} />
       </main>
     </div>
   );
