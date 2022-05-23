@@ -34,6 +34,7 @@ function App() {
     <div className="App">
       <header>
         <h1>Word Hunt Solver</h1>
+        <h3>by Ajay Ganesh</h3>
         <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br /> It can be used for games in the style of the iMessage game Word Hunt.</p>
       </header>
       <main>
