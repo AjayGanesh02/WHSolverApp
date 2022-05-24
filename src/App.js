@@ -35,7 +35,11 @@ function App() {
       <header>
         <h1>Word Hunt Solver</h1>
         <h3>by Ajay Ganesh</h3>
-        <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br /> It can be used for games in the style of the iMessage game Word Hunt.</p>
+        <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br /> 
+        It can be used for games in the style of the iMessage game Word Hunt.<br/>
+        <br/>
+        This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, <br/> 
+        and the Python API code can be found <a href="https://github.com/AjayGanesh02/whsolverbackend">here</a>.</p>
       </header>
       <main>
         <div className='form'>

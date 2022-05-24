@@ -6,7 +6,7 @@ import './results.scss'
 export default function Results({ results, submitted }) {
   return (
     <div className='results'>
-      {results.length > 0 ? <p>{results.length} words found</p> : <></>}
+      {results.length > 0 ? <h3>{results.length} words found</h3> : <></>}
       <div className='cards'>
         {results.length > 0 ?
           results.map((result, index) => (

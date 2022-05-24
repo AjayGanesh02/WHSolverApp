@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# React Frontend for Word Hunt Solver
+
+This contains the frontend code for my Word Hunt Solver app. The project uses Amazon AWS Amplify for hosting and CD pipelines. The backend can be found using the link in the About section.
+
+## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
