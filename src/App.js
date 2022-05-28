@@ -41,14 +41,18 @@ function App() {
 
   return (
     <div className="App">
+
       <header>
-        <h1>Word Hunt Solver</h1>
-        <h3>by Ajay Ganesh</h3>
-        <p>This site finds the possible words that can be made from a 4x4 grid of letters.<br />
-          It can be used for games in the style of the iMessage game Word Hunt.<br />
-          <br />
+        <div className='textbox'>
+          <h1>Word Hunt Solver</h1>
+          <h3>by Ajay Ganesh</h3>
+          <p>This site finds the possible words that can be made from a 4x4 grid of letters.
+            It can be used for games in the style of the iMessage game Word Hunt.
+            <br />
           </p>
+        </div>
       </header>
+
       <main>
         <div className='form'>
           <form onSubmit={handleSubmit}>
@@ -68,17 +72,21 @@ function App() {
         </div>
 
         <Results results={results} submitted={submitted} />
-        <ClipLoader color='green' loading={loading}/>
-        <h3>How does this site work?</h3>
-        <p>Your board string is sent to a python API at <a href="https://api.whsolver.ajayganesh.com">api.whsolver.ajayganesh.com</a>.<br/>
-        Here, a depth first search algorithm tries every possible combination of letters, stopping if the first few characters don't make a legal word.<br />
-        This info is sorted by word length if the sort toggle is turned on. <br/>
-        Protip: if the toggle is turned off, the solver returns words that start <br/>
-        near the top left corner of the board first. This way, the words are arranged in a manner that makes their starting locations<br/>
-        in order, which might lead to you entering them in faster!
-        <br/><br/>
-        This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, <br />
-        and the Python API code can be found <a href="https://github.com/AjayGanesh02/whsolverbackend">here</a>.</p>
+        <ClipLoader color='green' loading={loading} />
+
+        <div className='textbox'>
+          <h3>How does this site work?</h3>
+          <p>Your board string is sent to a python API at <a href="https://api.whsolver.ajayganesh.com">api.whsolver.ajayganesh.com</a>.
+            Here, a depth first search algorithm tries every possible combination of letters, stopping if the first few characters don't make a legal word.
+            This info is sorted by word length if the sort toggle is turned on. <br />
+            Protip: if the toggle is turned off, the solver returns words that start 
+            near the top left corner of the board first. This way, the words are arranged in a manner that arranges their starting locations
+            in order, which might lead to you entering them in faster!
+            <br /><br />
+            This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, <br />
+            and the Python API code can be found <a href="https://github.com/AjayGanesh02/whsolverbackend">here</a>.</p>
+        </div>
+
       </main>
     </div>
   );
