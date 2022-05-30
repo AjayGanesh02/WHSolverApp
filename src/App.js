@@ -13,6 +13,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -34,9 +35,17 @@ function App() {
     //get results from API and assign
     const response = await fetch(`${APIURL}${input}` + (checked ? '&sort=true' : '&sort=false'));
     const jsonresponse = await response.json();
-    setResults(jsonresponse.data);
-    setSubmitted(true);
-    setLoading(false);
+    if (jsonresponse.data[0] == "Invalid board string") {
+      setError(true);
+      setLoading(false);
+      setSubmitted(false);
+    } else {
+      setError(false);
+      setResults(jsonresponse.data);
+      setSubmitted(true);
+      setLoading(false);
+    }
+
   }
 
   return (
@@ -63,23 +72,28 @@ function App() {
             <br /><br />
             <label>
               Sort results by length:<br />
-              <Switch onChange={handleToggle} checked={checked} height={20} width={50} />
+              <Switch className='toggle' onChange={handleToggle} checked={checked} height={20} width={50} />
             </label>
-
-            <br /><br />
-            <input type="submit" value="Submit" />
+            <br />
+            <label>
+              <input className='submit' type="submit" value="Submit" />
+            </label>
           </form>
         </div>
 
-        <Results results={results} submitted={submitted} />
-        <ClipLoader color='green' loading={loading} />
+        <div className='results'>
+          {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div>: <></>}
+          <Results results={results} submitted={submitted} />
+          <ClipLoader color='green' loading={loading} />
+        </div>
+
 
         <div className='textbox'>
           <h3>How does this site work?</h3>
           <p>Your board string is sent to a python API at <a href="https://api.whsolver.ajayganesh.com">api.whsolver.ajayganesh.com</a>.
             Here, a depth first search algorithm tries every possible combination of letters, stopping if the first few characters don't make a legal word.
             This info is sorted by word length if the sort toggle is turned on. <br />
-            Protip: if the toggle is turned off, the solver returns words that start 
+            Protip: if the toggle is turned off, the solver returns words that start
             near the top left corner of the board first. This way, the words are arranged in a manner that arranges their starting locations
             in order, which might lead to you entering them in faster!
             <br /><br />

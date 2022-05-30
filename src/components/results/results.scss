@@ -12,5 +12,10 @@
         grid-auto-rows: 1fr;
         grid-column-gap: 30px;
         grid-row-gap: 30px;
+
+        @media only screen and (max-device-width: 480px) {
+            /* in mobile css commands */
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 }

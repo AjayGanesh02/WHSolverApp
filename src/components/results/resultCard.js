@@ -8,7 +8,7 @@ export default function ResultCard({ word, path }) {
       <h3>{word}</h3>
       <div className='path'>
         {path.map((coord, index) => (
-          <p>({coord[0]}, {coord[1]})</p>
+          <p key={index}>({coord[0]}, {coord[1]})</p>
         ))}
       </div>
     </div>
