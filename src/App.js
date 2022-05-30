@@ -67,9 +67,9 @@ function App() {
           <form onSubmit={handleSubmit}>
             <label>
               Enter your board as a string of 16 unseperated letters:<br />
-              <input type="text" value={input} onChange={handleInput} />
+              <input className='text' type="text" value={input} onChange={handleInput} />
             </label>
-            <br /><br />
+            <br />
             <label>
               Sort results by length:<br />
               <Switch className='toggle' onChange={handleToggle} checked={checked} height={20} width={50} />
