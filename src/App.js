@@ -61,6 +61,13 @@ function App() {
     ctx.clearRect(0, 0, photo.width, photo.height)
   }
 
+  const stop = () => {
+    let video = videoRef.current;
+    video.pause();
+    video.srcObject.getTracks().forEach(track => track.stop());
+    videoRef = null;
+  }
+
   useEffect(() => {
     getVideo();
   }, [videoRef]);
