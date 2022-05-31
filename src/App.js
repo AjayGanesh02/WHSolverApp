@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Results from './components/results/results';
 import Switch from "react-switch";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -14,9 +14,63 @@ function App() {
   const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [stringInput, setStringInput] = useState(true);
+  // const [videoInput, setVideoInput] = useState(false);
+
+  let videoRef = useRef(null);
+  let photoRef = useRef(null);
+
+  const getVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true
+      })
+      .then((stream) => {
+        let video = videoRef.current;
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const takePicture = () => {
+    const width = 400
+    const height = width / (16 / 9)
+
+    let video = videoRef.current
+
+    let photo = photoRef.current
+
+    photo.width = width
+
+    photo.height = height
+
+    let ctx = photo.getContext('2d')
+
+    ctx.drawImage(video, 0, 0, width, height)
+
+  }
+
+  const clearImage = () => {
+    let photo = photoRef.current
+
+    let ctx = photo.getContext('2d')
+
+    ctx.clearRect(0, 0, photo.width, photo.height)
+  }
+
+  useEffect(() => {
+    getVideo();
+  }, [videoRef]);
 
   const handleInput = (e) => {
     setInput(e.target.value);
+  }
+
+  const handleInputToggle = () => {
+    setStringInput(!stringInput);
   }
 
   const handleToggle = () => {
@@ -35,7 +89,7 @@ function App() {
     //get results from API and assign
     const response = await fetch(`${APIURL}${input}` + (checked ? '&sort=true' : '&sort=false'));
     const jsonresponse = await response.json();
-    if (jsonresponse.data[0] == "Invalid board string") {
+    if (jsonresponse.data[0] === "Invalid board string") {
       setError(true);
       setLoading(false);
       setSubmitted(false);
@@ -64,11 +118,30 @@ function App() {
 
       <main>
         <div className='form'>
+          <div className='buttons'>
+            <button onClick={handleInputToggle}>
+              {stringInput ? 'Input from video' : 'Input from string'}
+            </button>
+
+          </div>
           <form onSubmit={handleSubmit}>
-            <label>
-              Enter your board as a string of 16 unseperated letters:<br />
-              <input className='text' type="text" value={input} onChange={handleInput} />
-            </label>
+            {stringInput ?
+              <label>
+                Enter your board as a string of 16 unseperated letters:<br />
+                <input className='text' type="text" value={input} onChange={handleInput} />
+              </label>
+              :
+              <label>
+                Display your phone screen to the camera and press the button below to take a picture of your board:<br />
+                <video ref={videoRef} ></video>
+
+                <div onClick={takePicture} className='button'>Take Picture</div>
+
+                <canvas className="container" ref={photoRef}></canvas>
+
+                <div onClick={clearImage} className='buttonred'>Clear Image</div>
+              </label>
+            }
             <br />
             <label>
               Sort results by length:<br />
@@ -82,7 +155,7 @@ function App() {
         </div>
 
         <div className='results'>
-          {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div>: <></>}
+          {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div> : <></>}
           <Results results={results} submitted={submitted} />
           <ClipLoader color='green' loading={loading} />
         </div>
@@ -92,12 +165,12 @@ function App() {
           <h3>How does this site work?</h3>
           <p>Your board string is sent to a python API at <a href="https://api.whsolver.ajayganesh.com">api.whsolver.ajayganesh.com</a>.
             Here, a depth first search algorithm tries every possible combination of letters, stopping if the first few characters don't make a legal word.
-            This info is sorted by word length if the sort toggle is turned on. 
+            This info is sorted by word length if the sort toggle is turned on.
             Protip: if the toggle is turned off, the solver returns words that start
             near the top left corner of the board first. This way, the words are arranged in a manner that arranges their starting locations
             in order, which might lead to you entering them in faster!
             <br /><br />
-            This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, 
+            This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>,
             and the Python API code can be found <a href="https://github.com/AjayGanesh02/whsolverbackend">here</a>.</p>
         </div>
 
