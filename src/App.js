@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Results from './components/results/results';
+import Board from './components/board/board';
 import Switch from "react-switch";
 import ClipLoader from "react-spinners/ClipLoader";
 import './app.scss';
@@ -35,7 +36,7 @@ function App() {
     //get results from API and assign
     const response = await fetch(`${APIURL}${input}` + (checked ? '&sort=true' : '&sort=false'));
     const jsonresponse = await response.json();
-    if (jsonresponse.data[0] == "Invalid board string") {
+    if (jsonresponse.data[0] === "Invalid board string") {
       setError(true);
       setLoading(false);
       setSubmitted(false);
@@ -66,7 +67,7 @@ function App() {
         <div className='form'>
           <form onSubmit={handleSubmit}>
             <label>
-              Enter your board as a string of 16 unseperated letters:<br />
+              Enter your board as a string of 16 non-separated letters:<br />
               <input className='text' type="text" value={input} onChange={handleInput} />
             </label>
             <br />
@@ -80,6 +81,8 @@ function App() {
             </label>
           </form>
         </div>
+
+        <Board input={input} editable={false}/>
 
         <div className='results'>
           {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div>: <></>}
