@@ -13,10 +13,10 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-auto-rows: 1fr;
-        grid-column-gap: 30px;
-        grid-row-gap: 30px;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
         padding: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
 
         .square {
             display: flex;
@@ -26,8 +26,8 @@
             border: 1px solid #ccc;
             box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
             background-color: #fff;
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
 
         }
 
@@ -61,8 +61,21 @@
             border: 1px solid #ccc;
             box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
             background-color: #fff;
-            width: 25px;
-            height: 25px;
+            width: 35px;
+            height: 35px;
+
+        }
+
+        .redsquare {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid red;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            width: 35px;
+            height: 35px;
 
         }
 

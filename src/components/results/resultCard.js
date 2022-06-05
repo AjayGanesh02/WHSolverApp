@@ -7,9 +7,7 @@ export default function ResultCard({ word, path }) {
   return (
     <div className='resultcard'>
       <h3>{word}</h3>
-      <div className='path'>
-        <Board input={"abcdefghijklmnop"} big={false}/>
-      </div>
+        <Board input={"abcdefghijklmnop"} path={path} big={false}/>
     </div>
   )
 }
