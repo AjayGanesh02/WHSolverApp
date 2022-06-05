@@ -17,6 +17,7 @@ function App() {
   const [error, setError] = useState(false);
   const [boardInput, setBoardInput] = useState(false);
   const [textInput, setTextInput] = useState(true);
+  const [prevInput, setPrevInput] = useState("");
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -33,7 +34,6 @@ function App() {
     //clear previous results
     setLoading(true);
     setResults([]);
-    setInput("");
     setSubmitted(false);
 
     //get results from API and assign
@@ -44,6 +44,8 @@ function App() {
       setLoading(false);
       setSubmitted(false);
     } else {
+      setPrevInput(input)
+      setInput("");
       setError(false);
       setResults(jsonresponse.data);
       setSubmitted(true);
@@ -97,7 +99,7 @@ function App() {
 
         <div className='results'>
           {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div>: <></>}
-          <Results results={results} submitted={submitted} />
+          <Results results={results} submitted={submitted} board={prevInput} />
           <ClipLoader color='green' loading={loading} />
         </div>
 

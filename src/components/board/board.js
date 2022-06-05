@@ -13,7 +13,7 @@ export default function Board({ input, path, big }) {
       {input && big ? <h3>Entered Board:</h3> : <></>}
       <div className='squares'>
         {input.split("").map((letter, index) => (
-          <div className={paths.includes(index) ? 'redsquare':'square'} key={index} >{letter}</div>
+          <div className={paths?.includes(index) ? 'redsquare':'square'} key={index} >{letter}</div>
         ))}
       </div>
     </div>
