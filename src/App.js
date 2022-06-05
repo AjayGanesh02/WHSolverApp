@@ -15,6 +15,8 @@ function App() {
   const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [boardInput, setBoardInput] = useState(false);
+  const [textInput, setTextInput] = useState(true);
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -32,6 +34,7 @@ function App() {
     setLoading(true);
     setResults([]);
     setInput("");
+    setSubmitted(false);
 
     //get results from API and assign
     const response = await fetch(`${APIURL}${input}` + (checked ? '&sort=true' : '&sort=false'));
@@ -66,10 +69,18 @@ function App() {
       <main>
         <div className='form'>
           <form onSubmit={handleSubmit}>
-            <label>
+            { textInput ? 
+              <label>
               Enter your board as a string of 16 non-separated letters:<br />
-              <input className='text' type="text" value={input} onChange={handleInput} />
+              <input className='text' type="text" value={input} onChange={handleInput} maxLength={16} />
             </label>
+            :<></>}
+            {boardInput ?
+            <label>
+              Enter your board below:<br />
+
+            </label> 
+            :<></>}
             <br />
             <label>
               Sort results by length:<br />
@@ -82,7 +93,7 @@ function App() {
           </form>
         </div>
 
-        <Board input={input} editable={false}/>
+        {input && textInput ? <Board input={input} big={true} />:<></>}
 
         <div className='results'>
           {error ? <div className='error'><p>Invalid Board submitted. Please try again.</p></div>: <></>}
@@ -96,7 +107,7 @@ function App() {
           <p>Your board string is sent to a python API at <a href="https://api.whsolver.ajayganesh.com">api.whsolver.ajayganesh.com</a>.
             Here, a depth first search algorithm tries every possible combination of letters, stopping if the first few characters don't make a legal word.
             This info is sorted by word length if the sort toggle is turned on. 
-            Protip: if the toggle is turned off, the solver returns words that start
+            Pro tip: if the toggle is turned off, the solver returns words that start
             near the top left corner of the board first. This way, the words are arranged in a manner that arranges their starting locations
             in order, which might lead to you entering them in faster!
             <br /><br />
