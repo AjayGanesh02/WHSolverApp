@@ -9,22 +9,31 @@ function App() {
 
   const APIURL = 'https://api.whsolver.ajayganesh.com/solve?board='
 
+  //handle user inputs
   const [input, setInput] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [results, setResults] = useState([]);
-  const [checked, setChecked] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [prevInput, setPrevInput] = useState("");
+  const [sortres, setSortres] = useState(true);
   const [boardInput, setBoardInput] = useState(false);
   const [textInput, setTextInput] = useState(true);
-  const [prevInput, setPrevInput] = useState("");
+
+  //hold results
+  const [results, setResults] = useState([]);
+
+  //hold conditional display logic
+  //loading is whether the results are being fetched/rendered
+  //submitted is whether a valid input was submitted
+  //error is whether the fetch returned an error or not
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
+  
 
   const handleInput = (e) => {
     setInput(e.target.value);
   }
 
   const handleToggle = () => {
-    setChecked(!checked);
+    setSortres(!sortres);
   }
 
   const handleSubmit = async (e) => {
@@ -37,11 +46,10 @@ function App() {
     setSubmitted(false);
 
     //get results from API and assign
-    const response = await fetch(`${APIURL}${input}` + (checked ? '&sort=true' : '&sort=false'));
+    const response = await fetch(`${APIURL}${input}` + (sortres ? '&sort=true' : '&sort=false'));
     const jsonresponse = await response.json();
     if (jsonresponse.data[0] === "Invalid board string") {
       setError(true);
-      setLoading(false);
       setSubmitted(false);
     } else {
       setPrevInput(input)
@@ -49,8 +57,8 @@ function App() {
       setError(false);
       setResults(jsonresponse.data);
       setSubmitted(true);
-      setLoading(false);
     }
+    setLoading(false);
 
   }
 
@@ -86,7 +94,7 @@ function App() {
             <br />
             <label>
               Sort results by length:<br />
-              <Switch className='toggle' onChange={handleToggle} checked={checked} height={20} width={50} />
+              <Switch className='toggle' onChange={handleToggle} checked={sortres} height={20} width={50} />
             </label>
             <br />
             <label>
