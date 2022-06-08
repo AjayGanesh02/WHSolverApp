@@ -121,7 +121,7 @@ function App() {
             near the top left corner of the board first. This way, the words are arranged in a manner that arranges their starting locations
             in order, which might lead to you entering them in faster!
             <br /><br />
-            This site is open source! The React frontend code can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, 
+            The React frontend code for this site can be found <a href="https://github.com/AjayGanesh02/whsolverfrontend">here</a>, 
             and the Python API code can be found <a href="https://github.com/AjayGanesh02/whsolverbackend">here</a>.</p>
         </div>
 
